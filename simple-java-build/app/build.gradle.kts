@@ -19,16 +19,14 @@ repositories {
     maven {
         url = uri("https://packages.confluent.io/maven/")
     }
-//    maven {
-//        name = "GitHubPackages-specmesh"
-//        url = uri("https://maven.pkg.github.com/specmesh/specmesh-build")
-//        credentials {
-//            username = project.findProperty("GITHUB_ACTOR").toString() ?: System.getenv("GITHUB_ACTOR")
-//            password = project.findProperty("GITHUB_TOKEN").toString() ?: System.getenv("GITHUB_TOKEN")
-//        }
-//    }
-}
 
+    maven {
+        name = "GitHubPackagesSpecMesh"
+        url = uri("https://maven.pkg.github.com/specmesh/specmesh-build")
+        // set ~/.gradle/gradle.properties vars: GitHubPackagesSpecMeshUsername and Password accordingly
+        credentials(PasswordCredentials::class)
+    }
+}
 dependencies {
     // Use JUnit Jupiter API for testing.
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
@@ -73,8 +71,8 @@ dependencies {
 
 
     // SpecMesh stuff
-    testImplementation("specmesh-build:parser:0.1.0-SNAPSHOT")
-    testImplementation("specmesh-build:kafka:0.1.0-SNAPSHOT")
+    testImplementation("io.specmesh:specmesh-build-parser:0.1.0-SNAPSHOT")
+    testImplementation("io.specmesh:specmesh-build-kafka:0.1.0-SNAPSHOT")
 
     // Kafka deps
     implementation("org.apache.kafka:kafka-clients:$kafkaVersion")
