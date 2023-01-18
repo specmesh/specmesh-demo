@@ -1,0 +1,66 @@
+asyncapi: '2.4.0'
+id: 'urn:iot-demo:common-models'
+info:
+  title: Halliford 42
+  version: '1.0.0'
+  description: |
+    Data product representing a common data models
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+channels:
+  #  '_shared' topics will be optionally provisioned
+  _shared/raw-heating:
+    bindings:
+      kafka:
+        partitions: 1
+        replicas: 3
+    publish:
+      summary: Raw central Heating energy utilisation
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/proto"
+        payload:
+          $ref: "/schema/raw-heating-device.proto"
+
+  _shared/heating-device:
+    bindings:
+      kafka:
+        partitions: 1
+        replicas: 3
+        retention: 360
+
+    publish:
+      summary: Central Heating energy utilisation
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/proto"
+        payload:
+          $ref: "/schema/heating-device.proto"
+
+  # PRODUCER/OWNER build pipe will publish schema to SR
+  _shared/user_proximity:
+    bindings:
+      kafka:
+        partitions: 1
+        replicas: 1
+    publish:
+      summary: User proximity notification
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/octet-stream"
+        payload:
+          $ref: "/schema/user-proximity.proto"

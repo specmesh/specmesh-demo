@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+// https://datahubproject.io/docs/metadata-integration/java/datahub-protobuf/
+
+package iotdemo.common;
+import "meta.proto";
+
+message EnvironmentData {
+  double temperature = 1;
+  double pressure = 2;
+  double humidity = 3;
+  double co2_level = 4;
+}
+
+enum ErrorLevel {
+  UNSPECIFIED = 0;
+  ERROR = 1;
+  WARNING = 2;
+  INFO = 3;
+}
+
+message Event {
+  int32 event_number = 1;
+  ErrorLevel error_level = 2;
+  string message = 3;
+}
+
+message TelemetryMessage {
+  uint64 timestamp = 1;
+  oneof payload {
+    EnvironmentData environment_data = 2;
+    Event event = 3;
+  }
+}
+
+message DeviceMessages {
+  repeated TelemetryMessage telemetry_messages = 1;
+}

@@ -1,0 +1,76 @@
+asyncapi: '2.4.0'
+id: 'urn:iot-demo:main-city:district-alpha-oe:halliford:43'
+info:
+  title: Halliford 42
+  version: '1.0.0'
+  description: |
+    Data product representing a building's iot devices
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+channels:
+  #  '_shared' topics will be optionally provisioned
+  /iot-demo/some-city/district-alpha-oe/_shared/central-heating/raw:
+    bindings:
+      kafka:
+        partitions: 12
+        replicas: 3
+        retention: 360
+        configs:
+          cleanup.policy: delete
+
+    publish:
+      summary: Raw central Heating energy utilisation
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/proto"
+        payload:
+          $ref: "/iot-demo/common-models/raw-heating-device.proto"
+
+  _public/central-heating:
+    bindings:
+      kafka:
+        partitions: 12
+        replicas: 3
+        retention: 360
+        configs:
+          cleanup.policy: delete
+
+    publish:
+      summary: Central Heating energy utilisation
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/proto"
+        payload:
+          $ref: "/iot-demo/common/_shared/heating-device.proto"
+
+  # PRODUCER/OWNER build pipe will publish schema to SR
+  _public/user_proximity:
+    bindings:
+      kafka:
+        partitions: 3
+        replicas: 1
+        retention: 360
+        configs:
+          cleanup.policy: delete
+
+    publish:
+      summary: User proximity notificaition
+      message:
+        bindings:
+          kafka:
+            schemaIdLocation: "payload"
+            schemaIdPayloadEncoding: "confluent"
+        schemaFormat: "application/proto;version=1.9.0"
+        contentType: "application/octet-stream"
+        payload:
+          $ref: "/iot-demo/common/_shared/user-proximity.proto"
