@@ -14,7 +14,7 @@ import "google/protobuf/descriptor.proto";
    Properties should be strings
 
 */
-enum MetadataType {
+enum DataHubMetadataType {
   PROPERTY        = 0; // Datahub Custom Property
   TAG             = 1; // Datahub Tag
   TAG_LIST        = 2; // Datahub Tags from comma delimited string

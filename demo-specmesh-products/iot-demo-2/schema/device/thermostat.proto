@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package iotdemo.device;
+import "google/protobuf/timestamp.proto";
+import "../types.proto";
+
+message Thermostat {
+  string deviceId = 1;
+  google.protobuf.Timestamp timestamp = 2;
+
+  option(meta.msg.classification_enum) = Sensitive;
+  iotdemo.DegreesC temperature = 3;
+}

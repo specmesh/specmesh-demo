@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package iotdemo.device;
+import "google/protobuf/timestamp.proto";
+import "../types.proto";
+
+message CurrentTemp {
+  string deviceId = 1;
+  google.protobuf.Timestamp timestamp = 2;
+
+  iotdemo.Watts currentEnergyUsage = 3;
+}
