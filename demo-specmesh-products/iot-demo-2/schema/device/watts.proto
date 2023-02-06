@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package iotdemo.device;
+import "google/protobuf/timestamp.proto";
+
+
+message Watts {
+  float amount = 1;
+}

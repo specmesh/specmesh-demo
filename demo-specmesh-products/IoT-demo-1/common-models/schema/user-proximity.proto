@@ -31,11 +31,6 @@ message TelemetryMessage {
 }
 
 message DeviceMessages {
-  option(meta.ownership.domain) = "Marketing";
-  option(meta.ownership.team) = "Marketing";
-  option(meta.ownership.team) = "Analytics";
-
-  option(meta.message.type) = ENTITY;
-  option(meta.security.classification_enum) = HighlyConfidential;
+  option(meta.msg.tags) = "a, b, c";
   repeated TelemetryMessage telemetry_messages = 1;
 }

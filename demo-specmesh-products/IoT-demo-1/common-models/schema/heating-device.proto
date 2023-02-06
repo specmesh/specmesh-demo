@@ -3,7 +3,7 @@ syntax = "proto3";
 // https://datahubproject.io/docs/metadata-integration/java/datahub-protobuf/
 
 package iotdemo.common;
-import "meta.proto";
+import "schema/meta.proto";
 
 message EnvironmentData {
   double temperature = 1;
@@ -34,5 +34,6 @@ message TelemetryMessage {
 }
 
 message DeviceMessages {
+  option(meta.message.type) = EVENT;
   repeated TelemetryMessage telemetry_messages = 1;
 }

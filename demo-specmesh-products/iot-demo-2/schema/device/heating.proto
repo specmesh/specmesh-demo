@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+// see https://datahubproject.io/docs/metadata-integration/java/datahub-protobuf/#code-example
+package iotdemo.device;
+import "google/protobuf/timestamp.proto";
+import "../types.proto";
+
+message Heating {
+  string deviceId = 1;
+  google.protobuf.Timestamp timestamp = 2;
+
+  iotdemo.Watts currentEnergyUsage = 3;
+}

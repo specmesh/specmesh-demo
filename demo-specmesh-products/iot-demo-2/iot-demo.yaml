@@ -1,0 +1,112 @@
+asyncapi: '2.5.0'
+id: 'urn:iot-demo'
+info:
+  title: IoT Kafka Demo
+  version: '1.0.0'
+  description: |
+    * Receive real-time information about environmental lighting conditions 📈
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+
+channels:
+  _protected.device.thermostat:
+    description: device temperature information by device id
+    bindings:
+      kafka:
+        partitions: 3
+        replicas: 1
+        retention: 1
+        configs:
+          cleanup.policy: delete
+    publish:
+      message:
+        $ref: '#/components/messages/DeviceThermostatMessage'
+
+  _protected.device.heating:
+    description: device energy consumption by device id
+    publish:
+      message:
+        payload:
+          key:
+            schemaFormat: kafka
+            type: string
+          value:
+            schemaFormat: proto3
+            schema: "/schema/device/current_temp.proto"
+
+  _protected.device.proximity:
+    description: device proximity data by device id
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/device/proximity.proto"
+
+
+  _private.unit.thermostat:
+    description: device raw temperature information by unit id
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/device/thermostat.proto"
+
+  _private.unit.heating:
+    description: device energy consumption by unit id
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/device/current_temp.proto"
+
+  _private.unit.proximity:
+    description: device proximity data by unit id
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/device/proximity.proto"
+
+  _public.unit.temp.15m:
+    description: current temp per device 15 minute hopping window by unit
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/unit/current_temp.proto"
+
+  _public.unit.energy.15m:
+    description: current energy consumption 15 minute hopping window by unit
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/unit/current_energy.proto"
+
+  _public.unit.occupancy.15m:
+    description: occupancy data per 15m hoping window per unit
+    publish:
+      message:
+        payload:
+          x$ref: "/schema/unit/current_occupancy.proto"
+
+
+
+components:
+  messages:
+    DeviceThermostatMessage:
+      schemaFormat: "application/schema+proto;version=3"
+      contentType: "application/proto"
+      tags:
+          - name: "mqtt"
+            description: "thermostat data"
+      payload:
+        $ref: "/schema/device/thermostat.proto"
+      bindings:
+        kafka:
+          key:
+            schemaFormat: kafka
+            type: string
+            tags:
+              - $ref: "#/tags/device-id"
+
+  tags:
+    device-id:
+      name: "device-id"
+      description: "Manufactures... blah"
