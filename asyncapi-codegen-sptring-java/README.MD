@@ -1,4 +1,8 @@
-Example of: https://github.com/asyncapi/java-spring-template
+Example of of using: https://github.com/asyncapi/java-spring-template
+
+Prerequisite:
+- install npm using `brew install npm`
+- run `npm install -g @asyncapi/generator`
 
 
 Generate using: 
