@@ -20,4 +20,4 @@ Look for
 
 Prefix the domain-id "specmesh:examples:schema_demo":
 
-? @KafkaListener(topics = "specmesh.examples.schema_demo.event.lighting.measured", groupId = "my-group")
+> @KafkaListener(topics = "specmesh.examples.schema_demo.event.lighting.measured", groupId = "my-group")
