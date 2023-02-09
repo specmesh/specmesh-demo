@@ -101,12 +101,11 @@ components:
       bindings:
         kafka:
           key:
-            schemaFormat: kafka
-            type: string
+            schemaFormat: "kafka"
+            type: "string"
             tags:
               - $ref: "#/tags/device-id"
-
   tags:
     device-id:
       name: "device-id"
-      description: "Manufactures... blah"
+      description: "Derived from manufacturer name, device serial and fw version"
